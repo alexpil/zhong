@@ -43,7 +43,7 @@ module Zhong
       errored = false
       ran = false
 
-      begin
+      # begin
         redis_lock.lock do
           locked = true
           @running = true
@@ -73,10 +73,10 @@ module Zhong
 
           ran!(time)
         end
-      rescue Suo::LockClientError => boom
-        logger.error "unable to run due to client error: #{boom}"
-        errored = true
-      end
+      # rescue Suo::LockClientError => boom
+        # logger.error "unable to run due to client error: #{boom}"
+        # errored = true
+      # end
 
       @running = false
 
