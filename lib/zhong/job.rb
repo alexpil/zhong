@@ -21,6 +21,8 @@ module Zhong
 
       @if = config[:if]
       @long_running_timeout = config[:long_running_timeout]
+      logger.info "!! long_running_timeout: #{@long_running_timeout}"
+
       @running = false
       @first_run = true
       @id = Digest::SHA256.hexdigest(@name)
@@ -185,7 +187,7 @@ module Zhong
     def redis_lock
       logger.info "long_running_timeout: #{@long_running_timeout}"
 
-      @lock ||= Suo::Client::Redis.new(lock_key, client: @redis, stale_lock_expiration: @long_running_timeout)
+      @lock ||= Suo::Client::Redis.new(lock_key, client: @redis, stale_lock_expiration: @long_running_timeout, acquisition_timeout: 1)
     end
   end
 end
